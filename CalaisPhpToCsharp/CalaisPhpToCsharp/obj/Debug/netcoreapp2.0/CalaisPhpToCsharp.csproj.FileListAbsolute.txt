@@ -1,0 +1,11 @@
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\bin\Debug\netcoreapp2.0\CalaisPhpToCsharp.deps.json
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\bin\Debug\netcoreapp2.0\CalaisPhpToCsharp.runtimeconfig.json
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\bin\Debug\netcoreapp2.0\CalaisPhpToCsharp.runtimeconfig.dev.json
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\bin\Debug\netcoreapp2.0\CalaisPhpToCsharp.dll
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\bin\Debug\netcoreapp2.0\CalaisPhpToCsharp.pdb
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\obj\Debug\netcoreapp2.0\CalaisPhpToCsharp.csproj.CoreCompileInputs.cache
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\obj\Debug\netcoreapp2.0\CalaisPhpToCsharp.AssemblyInfoInputs.cache
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\obj\Debug\netcoreapp2.0\CalaisPhpToCsharp.AssemblyInfo.cs
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\obj\Debug\netcoreapp2.0\CalaisPhpToCsharp.dll
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\obj\Debug\netcoreapp2.0\CalaisPhpToCsharp.pdb
+D:\MSc\My Project\CalaisPhpTest\CalaisPhpToCsharp\CalaisPhpToCsharp\obj\Debug\netcoreapp2.0\CalaisPhpToCsharp.csprojAssemblyReference.cache
