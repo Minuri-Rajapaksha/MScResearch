@@ -33,11 +33,14 @@ namespace CalaisPhpToCsharp
                   .Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
 
             client.DefaultRequestHeaders.Add("X-AG-Access-Token", api_token);            
-            client.DefaultRequestHeaders.Add("outputFormat", "application/json");   //xml/rdf
+            client.DefaultRequestHeaders.Add("outputFormat", "xml/rdf");   //xml/rdf
 
-            var content = new StringContent("Open Calais is a sophisticated Thomson Reuters web service that attaches intelligent metadata-tags to your unstructured content enabling powerful text analytics. The Calais natural language processing engine automatically analyzes and tags your input files in such a way that your consuming application can both easily pinpoint relevant data, and effectively leverage the invaluable intelligence and insights contained within the text." +
-                "Open Calais analyzes the semantic content of your input files using a combination of statistical, machine-learning, and custom pattern - based methods.The developed by the Text Metadata Services(TMS) group at Thomson Reuters output highly accurate and detailed metadata." +
-                "Open Calais also maps your metadata-tags to Thomson Reuters unique IDs.This supports disambiguation(and linking) of data across all documents processed by Calais, and also offers you the opportunity to further enrich your data with related information from the Thomson Reuters datasets.");
+            var content = new StringContent("Trees are one of the most important things in the world. They give us shade. " +
+                "When we are going somewhere in the sun, when we are tired, we sit under a tree to rest. We choose a tree because it is shady. " +
+                "Trees give us food. We take fruits, vegetables, grains and green leaves from trees. We also eat roots like carrots, sweet potatoes, " +
+                "manioc and beetroot. Trees give us wood to make houses, buildings, furniture etc. The most important things is that they give us " +
+                "oxygen to breathe. Trees make our earth clean and beautiful.We must not cut trees.It takes only a few minutes to cut a tree but it " +
+                "takes years to grow.");
 
             var respons = client.PostAsync("", content).Result;
             var responseResult = respons.Content.ReadAsStringAsync().Result;
