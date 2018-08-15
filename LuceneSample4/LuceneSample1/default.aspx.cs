@@ -50,7 +50,7 @@ namespace LuceneSample1
         {
             var directory = new RAMDirectory();
 
-            using (Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30))
+            using (Analyzer analyzer = new Lucene.Net.Analysis.Snowball.SnowballAnalyzer(Lucene.Net.Util.Version.LUCENE_30, "English"))
             using (var writer = new IndexWriter(directory, analyzer, new IndexWriter.MaxFieldLength(1000)))
             { // the writer and analyzer will popuplate the directory with documents
 
@@ -94,7 +94,7 @@ namespace LuceneSample1
             using (var reader = IndexReader.Open(Index, true))
             using (var searcher = new IndexSearcher(reader))
             {
-                using (Analyzer analyzer = new StandardAnalyzer(Lucene.Net.Util.Version.LUCENE_30))
+                using (Analyzer analyzer = new Lucene.Net.Analysis.Snowball.SnowballAnalyzer(Lucene.Net.Util.Version.LUCENE_30, "English"))
                 {
                     var queryParser = new QueryParser(Version.LUCENE_30, "FullText", analyzer);
 

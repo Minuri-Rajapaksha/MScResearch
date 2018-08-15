@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lucene.Steroids</name>
+    </assembly>
+    <members>
+        <member name="M:Lucene.Steroids.SteroidsFSIndexInput.IsFDValid">
+            <summary>Method used for testing. Returns true if the underlying
+            file descriptor is valid.
+            </summary>
+        </member>
+        <member name="T:Lucene.Steroids.DelayCloseIndexSearcher">
+             <summary>
+             Implements search over a single IndexReader, but remains open even if close() is called. This way it can be shared by 
+             multiple objects that need to search the index without being aware of the keep-the-index-open-until-it-changes logic.
+             </summary>
+             <remarks>
+             <para>
+             Basic use (works, but can slow all searcher while opening a new Searcher instance:
+             <code>
+             public class SearcherFactory
+             {
+                 public SearcherFactory(Directory directory)
+                 {
+                     currentSearcher = new DelayCloseIndexSearcher(directory);
+                 }
+            
+                 public IndexSearcher CreateSearcher()
+                 {
+                     lock (this)
+                     {
+                         if (!currentSearcher.IsCurrent())
+                         {
+                             currentSearcher.CloseWhenDone();
+                             currentSearcher = new DelayCloseIndexSearcher(directory);
+                         }
+                         currentSearcher.Open();
+                         return currentSearcher;
+                     }
+                 }
+             
+                 public void Close()
+                 {
+                     currentSearcher.CloseWhenDone();
+                 }
+             
+                 private Directory directory;
+                 private DelayCloseIndexSearcher currentSearcher;
+             }
+             </code>
+             </para>
+             <para>
+             Objects that need to search the index do the following:
+             <code>
+             //searcherFactory is created once at startup
+             
+             IndexSearcher indexSearcher = searcherFactory.CreateSearcher();
+             Hits hits = indexSearcher.Search(query, filter, sort);
+             ... // handle results
+             indexSearcher.Close();
+             
+             // when the application shuts down
+             searcherFactory.Close();
+             </code>
+             </para>
+             </remarks>
+        </member>
+        <member name="F:Lucene.Steroids.DelayCloseIndexSearcher._usageCount">
+            <summary>
+            The number of Open() calls minus the number of Close() calls.
+            If this drops to zero and CloseWhenDone() is true, base.Close() is called.
+            </summary>
+        </member>
+        <member name="F:Lucene.Steroids.DelayCloseIndexSearcher._shouldCloseWhenDone">
+            <summary>
+            Indicates if CloseWhenDone() was called.
+            If true and usageCount is zero, base.Close() is called.
+            </summary>
+        </member>
+        <member name="M:Lucene.Steroids.DelayCloseIndexSearcher.#ctor(Lucene.Net.Store.Directory,System.Boolean)">
+            <summary>
+            Creates a DelayCloseIndexSearcher searching the index in the provided directory..
+            </summary>
+            <param name="directory">containing the index</param>
+            <param name="readOnly">open IndexSearcher read-only</param>
+        </member>
+        <member name="M:Lucene.Steroids.DelayCloseIndexSearcher.Open">
+            <summary>
+            This should be called whenever this instances is passed as a new IndexSearcher.
+            Only when each call to Open() is balanced with a call to Close(), and CloseWhenDone has been called, 
+            will base.Close() be called.
+            </summary>
+        </member>
+        <member name="M:Lucene.Steroids.DelayCloseIndexSearcher.CloseWhenDone">
+            <summary>
+            Signals that this instance may really close when all Open() calls have been balanced with a call to Close().
+            </summary>
+        </member>
+        <member name="M:Lucene.Steroids.DelayCloseIndexSearcher.IsClosed">
+            <summary>
+            Returns wether the underlying IndexSearcher has really been closed.
+            If it is true, this instance can no longer be used.
+            </summary>
+            <returns>whether the underlying IndexSearcher has really been closed</returns>
+        </member>
+        <member name="M:Lucene.Steroids.DelayCloseIndexSearcher.Close">
+            <summary>
+            Should be called once for every call to Open().
+            If the usageCount drops to zero and CloseWhenDone() was called, base.Close() will be called.
+            </summary>
+        </member>
+        <member name="T:Lucene.Steroids.SteroidsConfigurationSection">
+            <summary>
+            This module defines the luceneSteroidsConfig section in the Web.config or App.config files.
+            </summary>
+            <remarks>
+            <para>
+            To enable this configuration section, add the following to the Web.config file:
+            </para>
+            <code>
+            &lt;configSections>
+                &lt;section name="luceneSteroidsConfig" type="Lucene.Steroids.SteroidsConfigurationSection, Lucene.Steroids" />
+            &lt;/configSections>
+            </code>
+            <para>
+            An example of configuration is the following:
+            </para>
+            <code>
+            &lt;luceneSteroidsConfig
+                dataDir=".\database"
+                pipeName="\\.\pipe\myapp"
+                readonly="true"
+                />
+            </code>
+            <para>
+            The 'dataDir' points to Lucene database. The 'pipeName' is the name of the pipe that
+            will listen index commands. The 'readonly' attribute indicates whether the index should
+            be opened in read-only mode (the default is false).
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Lucene.Steroids.SteroidsConfigurationSection.DataDir">
+            <summary>
+            Points to Lucene database.
+            </summary>
+        </member>
+        <member name="P:Lucene.Steroids.SteroidsConfigurationSection.PipeName">
+            <summary>
+            Indicates the name of the pipe that will listen index commands.
+            </summary>
+        </member>
+        <member name="P:Lucene.Steroids.SteroidsConfigurationSection.ReadOnly">
+            <summary>
+            Indicates whether the index should be opened in read-only mode.
+            </summary>
+        </member>
+        <member name="P:Lucene.Steroids.SteroidsConfigurationSection.Configuration">
+            <summary>
+            Syntax sugar property to access the configuration section.
+            </summary>
+        </member>
+        <member name="M:Lucene.Steroids.NamedPipes.NamedPipeClient.Connect(System.String,System.Int32)">
+            <summary>
+            Connects to the server
+            </summary>
+        </member>
+        <member name="M:Lucene.Steroids.NamedPipes.NamedPipeServer.Start">
+            <summary>
+            Starts the pipe server
+            </summary>
+        </member>
+        <member name="M:Lucene.Steroids.NamedPipes.NamedPipeServer.ListenForClients">
+            <summary>
+            Listens for client connections
+            </summary>
+        </member>
+        <member name="P:Lucene.Steroids.SteroidsFSDirectory.Configuration">
+            <summary>
+            Syntax sugar property to access the configuration section.
+            </summary>
+        </member>
+        <member name="T:Lucene.Steroids.SteroidsIndexSearcher">
+            <summary>
+            Implements search over a single IndexReader, and updates searcher
+            when there is a new version available.
+            </summary>
+            <remarks>
+            <para>
+            Basic use:
+            <code>
+            IndexSearcher indexSearcher = SteroidsIndexSearcher.Instance;
+            Hits hits = indexSearcher.Search(query, filter, sort);
+            ... // handle results
+            indexSearcher.Close();
+            
+            // when the application shuts down
+            SteroidsIndexSearcher.Close();
+            </code>
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Lucene.Steroids.SteroidsIndexSearcher.Close">
+            <summary>
+            Close the IndexSearcher instance.
+            </summary>
+        </member>
+        <member name="P:Lucene.Steroids.SteroidsIndexSearcher.Instance">
+            <summary>
+            Get an IndexSearcher instance. Don't forget to call Close when
+            you are done using the IndexSearcher instance.
+            </summary>
+        </member>
+        <member name="P:Lucene.Steroids.SteroidsIndexSearcher.Singleton.Configuration">
+            <summary>
+            Syntax sugar property to access the configuration section.
+            </summary>
+        </member>
+    </members>
+</doc>
